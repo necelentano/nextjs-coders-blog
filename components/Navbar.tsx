@@ -30,7 +30,7 @@ const Navbar = () => {
             Log in
           </a>
         </li>
-        <li className="mr-6 font-medium  text-gray-600">
+        <li className="font-medium  text-gray-600">
           <a
             href="#"
             className="bg-primary py-2 px-4 rounded-sm text-white hover:bg-primary-dark transition-all"
