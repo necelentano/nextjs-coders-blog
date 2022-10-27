@@ -2,16 +2,19 @@ import { AxiosResponse } from "axios";
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Tabs from "../components/Tabs";
-import { fetchCategories } from "../http";
-import { ICategory, ICollectionResponse } from "../types";
+import { fetchArticles, fetchCategories } from "../http";
+import { ICategory, IArticle, ICollectionResponse } from "../types";
 
 interface IPropTypes {
   categories: {
     items: ICategory[];
   };
+  articles: {
+    items: IArticle[];
+  };
 }
 
-const Home: NextPage<IPropTypes> = ({ categories }) => {
+const Home: NextPage<IPropTypes> = ({ categories, articles }) => {
   return (
     <div>
       <Head>
@@ -31,10 +34,16 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const { data: categories }: AxiosResponse<ICollectionResponse<ICategory[]>> =
     await fetchCategories();
 
+  const { data: articles }: AxiosResponse<ICollectionResponse<IArticle[]>> =
+    await fetchArticles();
   return {
     props: {
       categories: {
         items: categories.data,
+      },
+      articles: {
+        items: articles.data,
+        pagination: articles.meta.pagination,
       },
     },
   };
