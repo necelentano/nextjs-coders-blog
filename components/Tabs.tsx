@@ -29,7 +29,7 @@ const Tabs = ({ categories }: IPropTypes) => {
             }`
           }
         >
-          <Link href="#">Recent</Link>
+          <Link href="/">Recent</Link>
         </li>
         {categories.map((category) => (
           <li
