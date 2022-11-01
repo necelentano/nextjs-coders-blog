@@ -69,3 +69,5 @@ export interface IArticle {
   id: number;
   attributes: IArticleAttributes;
 }
+
+export type TDirection = 1 | -1;

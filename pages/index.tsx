@@ -4,8 +4,14 @@ import Head from "next/head";
 import ArticleList from "../components/ArticleList";
 import Tabs from "../components/Tabs";
 import { fetchArticles, fetchCategories } from "../http";
-import { ICategory, IArticle, ICollectionResponse } from "../types";
+import {
+  ICategory,
+  IArticle,
+  ICollectionResponse,
+  IPagination,
+} from "../types";
 import qs from "qs";
+import Pagination from "../components/Pagination";
 
 interface IPropTypes {
   categories: {
@@ -13,10 +19,12 @@ interface IPropTypes {
   };
   articles: {
     items: IArticle[];
+    pagination: IPagination;
   };
 }
 
 const Home: NextPage<IPropTypes> = ({ categories, articles }) => {
+  const { page, pageCount } = articles.pagination;
   return (
     <div>
       <Head>
@@ -26,17 +34,22 @@ const Home: NextPage<IPropTypes> = ({ categories, articles }) => {
       </Head>
       <Tabs categories={categories.items} />
       <ArticleList articles={articles.items} />
+      <Pagination page={page} pageCount={pageCount} />
     </div>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { data: categories }: AxiosResponse<ICollectionResponse<ICategory[]>> =
     await fetchCategories();
 
   const options = {
     populate: ["author.avatar"],
     sort: ["id:desc"],
+    pagination: {
+      page: query.page ? query.page : 1,
+      pageSize: 1,
+    },
   };
 
   const queryString = qs.stringify(options);

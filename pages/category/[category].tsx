@@ -31,6 +31,8 @@ const Category: NextPage<IPropTypes> = ({ categories, articles, slug }) => {
   const formatCategory = (slug: string) => {
     return capitalyzeFirstLetter(makeCategory(slug));
   };
+
+  const { page, pageCount } = articles.pagination;
   return (
     <>
       <Head>
@@ -40,7 +42,11 @@ const Category: NextPage<IPropTypes> = ({ categories, articles, slug }) => {
       </Head>
       <Tabs categories={categories.items} />
       <ArticleList articles={articles.items} />
-      <Pagination />
+      <Pagination
+        page={page}
+        pageCount={pageCount}
+        redirectUrl={`/category/${slug}`}
+      />
     </>
   );
 };
@@ -53,6 +59,10 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       category: {
         slug: query.category,
       },
+    },
+    pagination: {
+      page: query.page ? query.page : 1,
+      pageSize: 1,
     },
   };
 
