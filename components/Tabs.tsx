@@ -4,18 +4,19 @@ import { ICategory } from "../types";
 
 interface IPropTypes {
   categories: ICategory[];
+  handleOnSearch: (query: string) => void;
 }
 
-const Tabs = ({ categories }: IPropTypes) => {
+const Tabs = ({ categories, handleOnSearch }: IPropTypes) => {
   const router = useRouter();
 
   const isActiveLink = (category: ICategory) => {
     return category.attributes.Slug === router.query.category;
   };
 
-  const handleOnSearch = (query: string) => {
-    console.log("Handle Search Input");
-  };
+  // const handleOnSearch = (query: string) => {
+  //   console.log("Handle Search Input");
+  // };
   return (
     <div className="my-8 flex items-center justify-between border-b-2 border-gray-100">
       <ul className="flex items-center">

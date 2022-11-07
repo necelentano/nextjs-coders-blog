@@ -71,3 +71,13 @@ export interface IArticle {
 }
 
 export type TDirection = 1 | -1;
+
+export interface IQueryOptions {
+  populate: any;
+  sort: any;
+  filters: any;
+  pagination: {
+    page: number;
+    pageSize: number;
+  };
+}
