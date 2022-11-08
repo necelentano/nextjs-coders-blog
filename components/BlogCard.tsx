@@ -10,7 +10,7 @@ interface IPropTypes {
 const BlogCard = ({ article }: IPropTypes) => {
   return (
     <div>
-      <Link href="#">
+      <Link href={`/article/${article.attributes.Slug}`}>
         <h2 className="text-xl text-gray-600 font-bold hover:decoration-2 hover:underline hover:cursor-pointer hover:decoration-primary">
           {article.attributes.Title}
         </h2>
@@ -31,7 +31,6 @@ const BlogCard = ({ article }: IPropTypes) => {
             {formatDate(article.attributes.createdAt)}
           </span>
         </span>
-        <span></span>
       </div>
       <div className="text-gray-500">
         {article.attributes.shortDescription.slice(0, 250)}{" "}
